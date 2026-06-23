@@ -981,9 +981,11 @@
         </div>
       </div>
     </div>
-    <form class="contact-form reveal-right" id="contactForm" action="https://formspree.io/f/loujatours" method="POST" novalidate>
-      <input type="hidden" name="_replyto" value="loujatours@gmail.com">
+    <!-- FIXED CONTACT FORM -->
+    <form class="contact-form reveal-right" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <input type="hidden" name="access_key" value="30605398-80c8-4937-9a32-676f1f75b47f">
       <input type="hidden" name="_subject" value="New Booking Inquiry — Louja Tours">
+      <input type="hidden" name="_from" value="loujatours@gmail.com">
       <div class="form-group">
         <input type="text" id="name" name="name" required placeholder=" ">
         <label for="name">Your Name</label>
@@ -1123,9 +1125,11 @@
           availability and tailor the experience to you.
         </p>
       </div>
-      <form class="booking-form" data-destination-form="Tour" action="https://formspree.io/f/loujatours" method="POST" novalidate>
-        <input type="hidden" name="_replyto" value="loujatours@gmail.com">
+      <!-- FIXED BOOKING FORM -->
+      <form class="booking-form" data-destination-form="Tour" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <input type="hidden" name="access_key" value="30605398-80c8-4937-9a32-676f1f75b47f">
         <input type="hidden" name="_subject" value="New Tour Request — Louja Tours">
+        <input type="hidden" name="_from" value="loujatours@gmail.com">
         <input type="hidden" id="tourInquiryName" name="tour">
         <div class="form-row">
           <div class="form-group">
@@ -1175,7 +1179,7 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner reveal-fade">
-    <a href="#hero" class="footer-logo" data-nav-home>Louja <span>Tours</span></a>
+    <a href="#hero" class="footer-logo" data-nav-home>Be In <span>Morocco</span></a>
     <p class="footer-tagline">Private Luxury Tour Experiences Across Morocco</p>
     <div class="footer-socials">
       <a href="https://www.instagram.com/loujatours" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
