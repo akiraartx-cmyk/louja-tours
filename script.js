@@ -812,108 +812,104 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!el.closest('.hero-content')) revealObserver.observe(el);
   });
 
-  /* ---------- CONTACT FORM (Web3Forms) ---------- */
+  /* ---------- EMAILJS INIT ---------- */
+  emailjs.init('_m5fOK20GRtCa-iTe');
+
+  const EMAILJS_SERVICE  = 'service_vouq7r8';
+  const EMAILJS_TEMPLATE = 'template_vyzf6kf';
+
+  /* ---------- CONTACT FORM (EmailJS) ---------- */
   const contactForm = document.getElementById('contactForm');
-  const formSuccess = document.getElementById('formSuccess');
-  const formError = document.getElementById('formError');
+  const formSuccess  = document.getElementById('formSuccess');
+  const formError    = document.getElementById('formError');
 
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Sync reply-to with email field value
-      const emailField = contactForm.querySelector('#email');
-      const replyToField = contactForm.querySelector('#contactReplyTo');
-      if (emailField && replyToField) replyToField.value = emailField.value;
-
-      const submitBtn = contactForm.querySelector('.btn-form span');
+      const submitBtn  = contactForm.querySelector('.btn-form span');
       const submitIcon = contactForm.querySelector('.btn-form i');
+      const btnEl      = contactForm.querySelector('.btn-form');
       const originalText = submitBtn.textContent;
+
       submitBtn.textContent = 'Sending…';
       if (submitIcon) submitIcon.style.display = 'none';
-      contactForm.querySelector('.btn-form').disabled = true;
-
-      // Hide any previous messages
+      btnEl.disabled = true;
       formSuccess.style.display = 'none';
-      formError.style.display = 'none';
+      formError.style.display   = 'none';
+
+      const params = {
+        name          : contactForm.querySelector('#name').value,
+        email         : contactForm.querySelector('#email').value,
+        departure     : contactForm.querySelector('#departure').value,
+        message       : contactForm.querySelector('#message').value,
+        tour_name     : 'General Inquiry',
+        guests        : '—',
+        preferred_date: '—'
+      };
 
       try {
-        const formData = new FormData(contactForm);
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: formData
-        });
-        const result = await response.json();
-
-        if (response.ok && result.success) {
-          formSuccess.style.display = 'block';
-          contactForm.reset();
-          document.activeElement.blur();
-          setTimeout(() => { formSuccess.style.display = 'none'; }, 6000);
-        } else {
-          formError.style.display = 'block';
-          setTimeout(() => { formError.style.display = 'none'; }, 7000);
-        }
+        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, params);
+        formSuccess.style.display = 'block';
+        contactForm.reset();
+        document.activeElement.blur();
+        setTimeout(() => { formSuccess.style.display = 'none'; }, 6000);
       } catch (err) {
+        console.error('EmailJS error:', err);
         formError.style.display = 'block';
         setTimeout(() => { formError.style.display = 'none'; }, 7000);
       } finally {
         submitBtn.textContent = originalText;
         if (submitIcon) submitIcon.style.display = '';
-        contactForm.querySelector('.btn-form').disabled = false;
+        btnEl.disabled = false;
       }
     });
   }
 
-  /* ---------- BOOKING FORM (Web3Forms) ---------- */
-  const bookingForm = document.getElementById('bookingForm');
+  /* ---------- BOOKING FORM (EmailJS) ---------- */
+  const bookingForm    = document.getElementById('bookingForm');
   const bookingSuccess = document.getElementById('bookingSuccess');
-  const bookingError = document.getElementById('bookingError');
+  const bookingError   = document.getElementById('bookingError');
 
   if (bookingForm) {
     bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Sync reply-to with email field value
-      const emailField = bookingForm.querySelector('#td-email');
-      const replyToField = bookingForm.querySelector('#bookingReplyTo');
-      if (emailField && replyToField) replyToField.value = emailField.value;
-
-      const submitBtn = bookingForm.querySelector('.btn-form span');
+      const submitBtn  = bookingForm.querySelector('.btn-form span');
       const submitIcon = bookingForm.querySelector('.btn-form i');
+      const btnEl      = bookingForm.querySelector('.btn-form');
       const originalText = submitBtn.textContent;
+
       submitBtn.textContent = 'Sending…';
       if (submitIcon) submitIcon.style.display = 'none';
-      bookingForm.querySelector('.btn-form').disabled = true;
-
-      // Hide any previous messages
+      btnEl.disabled = true;
       bookingSuccess.style.display = 'none';
-      bookingError.style.display = 'none';
+      bookingError.style.display   = 'none';
+
+      const params = {
+        name          : bookingForm.querySelector('#td-name').value,
+        email         : bookingForm.querySelector('#td-email').value,
+        guests        : bookingForm.querySelector('#td-guests').value,
+        preferred_date: bookingForm.querySelector('#td-date').value,
+        message       : bookingForm.querySelector('#td-message').value,
+        tour_name     : bookingForm.querySelector('#tourInquiryName').value || 'Not specified',
+        departure     : '—'
+      };
 
       try {
-        const formData = new FormData(bookingForm);
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: formData
-        });
-        const result = await response.json();
-
-        if (response.ok && result.success) {
-          bookingSuccess.style.display = 'block';
-          bookingForm.reset();
-          document.activeElement.blur();
-          setTimeout(() => { bookingSuccess.style.display = 'none'; }, 6000);
-        } else {
-          bookingError.style.display = 'block';
-          setTimeout(() => { bookingError.style.display = 'none'; }, 7000);
-        }
+        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, params);
+        bookingSuccess.style.display = 'block';
+        bookingForm.reset();
+        document.activeElement.blur();
+        setTimeout(() => { bookingSuccess.style.display = 'none'; }, 6000);
       } catch (err) {
+        console.error('EmailJS error:', err);
         bookingError.style.display = 'block';
         setTimeout(() => { bookingError.style.display = 'none'; }, 7000);
       } finally {
         submitBtn.textContent = originalText;
         if (submitIcon) submitIcon.style.display = '';
-        bookingForm.querySelector('.btn-form').disabled = false;
+        btnEl.disabled = false;
       }
     });
   }
