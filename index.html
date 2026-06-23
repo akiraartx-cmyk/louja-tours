@@ -982,10 +982,13 @@
       </div>
     </div>
     <!-- FIXED CONTACT FORM -->
-    <form class="contact-form reveal-right" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+    <form class="contact-form reveal-right" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="30605398-80c8-4937-9a32-676f1f75b47f">
-      <input type="hidden" name="_subject" value="New Booking Inquiry — Louja Tours">
-      <input type="hidden" name="_from" value="loujatours@gmail.com">
+      <input type="hidden" name="to" value="loujatours@gmail.com">
+      <input type="hidden" name="subject" value="New Booking Inquiry — Louja Tours">
+      <!-- Honeypot spam protection -->
+      <input type="checkbox" name="botcheck" style="display: none;">
+      
       <div class="form-group">
         <input type="text" id="name" name="name" required placeholder=" ">
         <label for="name">Your Name</label>
@@ -1126,11 +1129,14 @@
         </p>
       </div>
       <!-- FIXED BOOKING FORM -->
-      <form class="booking-form" data-destination-form="Tour" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <form class="booking-form" data-destination-form="Tour" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="30605398-80c8-4937-9a32-676f1f75b47f">
-        <input type="hidden" name="_subject" value="New Tour Request — Louja Tours">
-        <input type="hidden" name="_from" value="loujatours@gmail.com">
+        <input type="hidden" name="to" value="loujatours@gmail.com">
+        <input type="hidden" name="subject" value="New Tour Request — Louja Tours">
         <input type="hidden" id="tourInquiryName" name="tour">
+        <!-- Honeypot spam protection -->
+        <input type="checkbox" name="botcheck" style="display: none;">
+        
         <div class="form-row">
           <div class="form-group">
             <input type="text" id="td-name" name="name" required placeholder=" ">
