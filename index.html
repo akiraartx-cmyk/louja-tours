@@ -981,14 +981,11 @@
         </div>
       </div>
     </div>
-    <!-- FIXED CONTACT FORM -->
-    <form class="contact-form reveal-right" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+    <form class="contact-form reveal-right" id="contactForm" novalidate>
       <input type="hidden" name="access_key" value="30605398-80c8-4937-9a32-676f1f75b47f">
-      <input type="hidden" name="to" value="loujatours@gmail.com">
       <input type="hidden" name="subject" value="New Booking Inquiry — Louja Tours">
-      <!-- Honeypot spam protection -->
-      <input type="checkbox" name="botcheck" style="display: none;">
-      
+      <input type="hidden" name="from_name" value="Louja Tours Website">
+      <input type="hidden" name="replyto" id="contactReplyTo" value="">
       <div class="form-group">
         <input type="text" id="name" name="name" required placeholder=" ">
         <label for="name">Your Name</label>
@@ -1000,12 +997,13 @@
         <span class="form-underline"></span>
       </div>
       <div class="form-group">
+        <label for="departure" style="position:static;font-size:0.78rem;color:var(--color-gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.3rem;display:block;">Preferred Departure City</label>
         <select id="departure" name="departure" required style="background:transparent;border:none;border-bottom:1.5px solid var(--color-line);width:100%;padding:0.6rem 0.1rem;font-size:0.98rem;color:var(--color-ink);outline:none;-webkit-appearance:none;appearance:none;font-family:inherit;">
-          <option value="" disabled selected>Preferred Departure City</option>
-          <option value="marrakech">Marrakech</option>
-          <option value="casablanca">Casablanca</option>
-          <option value="fes">Fes</option>
-          <option value="tangier">Tangier</option>
+          <option value="" disabled selected>Select a city</option>
+          <option value="Marrakech">Marrakech</option>
+          <option value="Casablanca">Casablanca</option>
+          <option value="Fes">Fes</option>
+          <option value="Tangier">Tangier</option>
         </select>
         <span class="form-underline"></span>
       </div>
@@ -1018,7 +1016,8 @@
         <span>Send Inquiry</span>
         <i class="fa-solid fa-paper-plane"></i>
       </button>
-      <p class="form-success" id="formSuccess">Thank you — your message has been received. We'll be in touch shortly.</p>
+      <p class="form-success" id="formSuccess" style="display:none;">✓ Thank you — your message has been received. We'll be in touch shortly.</p>
+      <p class="form-error" id="formError" style="display:none;color:#e05a5a;margin-top:0.8rem;font-size:0.9rem;">Something went wrong. Please try again or email us directly at loujatours@gmail.com</p>
     </form>
   </div>
 </section>
@@ -1128,15 +1127,12 @@
           availability and tailor the experience to you.
         </p>
       </div>
-      <!-- FIXED BOOKING FORM -->
-      <form class="booking-form" data-destination-form="Tour" action="https://api.web3forms.com/submit" method="POST">
+      <form class="booking-form" id="bookingForm" data-destination-form="Tour" novalidate>
         <input type="hidden" name="access_key" value="30605398-80c8-4937-9a32-676f1f75b47f">
-        <input type="hidden" name="to" value="loujatours@gmail.com">
-        <input type="hidden" name="subject" value="New Tour Request — Louja Tours">
-        <input type="hidden" id="tourInquiryName" name="tour">
-        <!-- Honeypot spam protection -->
-        <input type="checkbox" name="botcheck" style="display: none;">
-        
+        <input type="hidden" name="subject" value="New Tour Booking Request — Louja Tours">
+        <input type="hidden" name="from_name" value="Louja Tours Website">
+        <input type="hidden" name="replyto" id="bookingReplyTo" value="">
+        <input type="hidden" id="tourInquiryName" name="tour_name">
         <div class="form-row">
           <div class="form-group">
             <input type="text" id="td-name" name="name" required placeholder=" ">
@@ -1156,7 +1152,7 @@
             <span class="form-underline"></span>
           </div>
           <div class="form-group">
-            <input type="date" id="td-date" name="date" required placeholder=" ">
+            <input type="date" id="td-date" name="preferred_date" required placeholder=" ">
             <label for="td-date" class="label-static">Preferred Date</label>
             <span class="form-underline"></span>
           </div>
@@ -1170,7 +1166,8 @@
           <span>Request This Tour</span>
           <i class="fa-solid fa-paper-plane"></i>
         </button>
-        <p class="form-success">Thank you — your tour request has been received. We'll be in touch shortly.</p>
+        <p class="form-success" id="bookingSuccess" style="display:none;">✓ Thank you — your tour request has been received. We'll be in touch shortly.</p>
+        <p class="form-error" id="bookingError" style="display:none;color:#e05a5a;margin-top:0.8rem;font-size:0.9rem;">Something went wrong. Please try again or email us directly at loujatours@gmail.com</p>
       </form>
     </div>
   </section>
