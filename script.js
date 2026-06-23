@@ -812,44 +812,111 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!el.closest('.hero-content')) revealObserver.observe(el);
   });
 
-  /* ---------- CONTACT FORM ---------- */
+  /* ---------- CONTACT FORM (Web3Forms) ---------- */
   const contactForm = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Sync reply-to with email field value
+      const emailField = contactForm.querySelector('#email');
+      const replyToField = contactForm.querySelector('#contactReplyTo');
+      if (emailField && replyToField) replyToField.value = emailField.value;
+
       const submitBtn = contactForm.querySelector('.btn-form span');
+      const submitIcon = contactForm.querySelector('.btn-form i');
       const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Sending...';
-      setTimeout(() => {
+      submitBtn.textContent = 'Sending…';
+      if (submitIcon) submitIcon.style.display = 'none';
+      contactForm.querySelector('.btn-form').disabled = true;
+
+      // Hide any previous messages
+      formSuccess.style.display = 'none';
+      formError.style.display = 'none';
+
+      try {
+        const formData = new FormData(contactForm);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          formSuccess.style.display = 'block';
+          contactForm.reset();
+          document.activeElement.blur();
+          setTimeout(() => { formSuccess.style.display = 'none'; }, 6000);
+        } else {
+          formError.style.display = 'block';
+          setTimeout(() => { formError.style.display = 'none'; }, 7000);
+        }
+      } catch (err) {
+        formError.style.display = 'block';
+        setTimeout(() => { formError.style.display = 'none'; }, 7000);
+      } finally {
         submitBtn.textContent = originalText;
-        formSuccess.classList.add('show');
-        contactForm.reset();
-        document.activeElement.blur();
-        setTimeout(() => formSuccess.classList.remove('show'), 5000);
-      }, 900);
+        if (submitIcon) submitIcon.style.display = '';
+        contactForm.querySelector('.btn-form').disabled = false;
+      }
     });
   }
 
-  /* ---------- DESTINATION BOOKING FORMS ---------- */
-  document.querySelectorAll('.booking-form[data-destination-form]').forEach(form => {
-    const success = form.querySelector('.form-success');
-    form.addEventListener('submit', (e) => {
+  /* ---------- BOOKING FORM (Web3Forms) ---------- */
+  const bookingForm = document.getElementById('bookingForm');
+  const bookingSuccess = document.getElementById('bookingSuccess');
+  const bookingError = document.getElementById('bookingError');
+
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = form.querySelector('.btn-form span');
+
+      // Sync reply-to with email field value
+      const emailField = bookingForm.querySelector('#td-email');
+      const replyToField = bookingForm.querySelector('#bookingReplyTo');
+      if (emailField && replyToField) replyToField.value = emailField.value;
+
+      const submitBtn = bookingForm.querySelector('.btn-form span');
+      const submitIcon = bookingForm.querySelector('.btn-form i');
       const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Sending...';
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-        if (success) {
-          success.classList.add('show');
-          setTimeout(() => success.classList.remove('show'), 5000);
+      submitBtn.textContent = 'Sending…';
+      if (submitIcon) submitIcon.style.display = 'none';
+      bookingForm.querySelector('.btn-form').disabled = true;
+
+      // Hide any previous messages
+      bookingSuccess.style.display = 'none';
+      bookingError.style.display = 'none';
+
+      try {
+        const formData = new FormData(bookingForm);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          bookingSuccess.style.display = 'block';
+          bookingForm.reset();
+          document.activeElement.blur();
+          setTimeout(() => { bookingSuccess.style.display = 'none'; }, 6000);
+        } else {
+          bookingError.style.display = 'block';
+          setTimeout(() => { bookingError.style.display = 'none'; }, 7000);
         }
-        form.reset();
-        document.activeElement.blur();
-      }, 900);
+      } catch (err) {
+        bookingError.style.display = 'block';
+        setTimeout(() => { bookingError.style.display = 'none'; }, 7000);
+      } finally {
+        submitBtn.textContent = originalText;
+        if (submitIcon) submitIcon.style.display = '';
+        bookingForm.querySelector('.btn-form').disabled = false;
+      }
     });
-  });
+  }
 
   /* ---------- BACK TO TOP ---------- */
   const backToTop = document.getElementById('backToTop');
